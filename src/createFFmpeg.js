@@ -9,7 +9,7 @@ const NO_LOAD = Error(
 	"ffmpeg.wasm is not ready, make sure you have completed load()."
 )
 
-module.exports = (_options = {}) => {
+module.exports =  (_options = {}) => {
 	const {
 		log: logging,
 		logger,
@@ -38,6 +38,8 @@ module.exports = (_options = {}) => {
 		detectCompletion(message)
 	}
 
+	const getCreateFFmpegCoreObject = null
+
 	/*
 	 * Load ffmpeg.wasm-core script.
 	 * In browser environment, the ffmpeg.wasm-core script is fetch from
@@ -57,8 +59,10 @@ module.exports = (_options = {}) => {
 			 * In node environment, all paths are undefined as there
 			 * is no need to set them.
 			 */
-			const { createFFmpegCore, corePath, workerPath, wasmPath } =
-				await getCreateFFmpegCore(options)
+			if (getCreateFFmpegCoreObject === null) {
+				getCreateFFmpegCoreObject =await getCreateFFmpegCore()
+			}
+			const { createFFmpegCore, corePath, workerPath, wasmPath } = getCreateFFmpegCoreObject
 			Core = await createFFmpegCore({
 				/*
 				 * Assign mainScriptUrlOrBlob fixes chrome extension web worker issue
@@ -198,8 +202,8 @@ module.exports = (_options = {}) => {
 			} catch (e) {
 				log(e.message)
 			} finally {
-				// Core = null
-				// ffmpeg = null
+				Core = null
+				ffmpeg = null
 				runResolve = null
 			}
 		}
