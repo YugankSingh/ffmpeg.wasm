@@ -198,8 +198,8 @@ module.exports = (_options = {}) => {
 			} catch (e) {
 				log(e.message)
 			} finally {
-				Core = null
-				ffmpeg = null
+				// Core = null
+				// ffmpeg = null
 				runResolve = null
 			}
 		}
