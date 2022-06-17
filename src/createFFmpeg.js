@@ -9,7 +9,7 @@ const NO_LOAD = Error(
 	"ffmpeg.wasm is not ready, make sure you have completed load()."
 )
 
-module.exports =  (_options = {}) => {
+module.exports = (_options = {}) => {
 	const {
 		log: logging,
 		logger,
@@ -60,9 +60,10 @@ module.exports =  (_options = {}) => {
 			 * is no need to set them.
 			 */
 			if (getCreateFFmpegCoreObject === null) {
-				getCreateFFmpegCoreObject =await getCreateFFmpegCore()
+				getCreateFFmpegCoreObject = await getCreateFFmpegCore(options)
 			}
-			const { createFFmpegCore, corePath, workerPath, wasmPath } = getCreateFFmpegCoreObject
+			const { createFFmpegCore, corePath, workerPath, wasmPath } =
+				getCreateFFmpegCoreObject
 			Core = await createFFmpegCore({
 				/*
 				 * Assign mainScriptUrlOrBlob fixes chrome extension web worker issue
