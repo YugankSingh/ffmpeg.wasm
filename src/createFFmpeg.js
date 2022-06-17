@@ -38,7 +38,7 @@ module.exports = (_options = {}) => {
 		detectCompletion(message)
 	}
 
-	const getCreateFFmpegCoreObject = null
+	let getCreateFFmpegCoreObject = null
 
 	/*
 	 * Load ffmpeg.wasm-core script.
